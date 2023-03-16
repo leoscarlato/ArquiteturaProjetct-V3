@@ -38,8 +38,9 @@ public class MensagemService {
         return mensagemRepository.save(mensagem);
     }
     
-    public Mensagem getMensagemByUser(Usuario usuario){
-        return mensagemRepository.findByUsername(usuario);
+    public List<Mensagem> getMensagemByUser(Usuario usuario){
+        return mensagemRepository.findAllByUsername(usuario);
     }
+    
     
 }

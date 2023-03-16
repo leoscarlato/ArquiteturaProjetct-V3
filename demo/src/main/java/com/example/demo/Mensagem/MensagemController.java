@@ -32,8 +32,10 @@ public class MensagemController {
         return mensagemService.criarMensagemArquivo(json);
     }
 
-    @GetMapping("/{id}")
-    public Mensagem getMensagemByUser(@PathVariable Usuario usuario){
+    @GetMapping("/user/{id}")
+    public List<Mensagem> getMensagemByUser(@PathVariable Integer id){
+        Usuario usuario = new Usuario();
+        usuario.setId(id);
         return mensagemService.getMensagemByUser(usuario);
     }
 }
