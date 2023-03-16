@@ -17,6 +17,14 @@ public class UsuarioService {
         return usuarioRepository.findById(id).orElse(null);
     }
 
+    public Usuario getUsuarioByUsername(String nome) {
+        if (usuarioRepository.findByUsername(nome) != null) {
+            return usuarioRepository.findByUsername(nome);
+        } else{
+            throw new RuntimeException("Usuário não encontrado");
+        }
+    }
+
     public Usuario createUsuario(Usuario usuario) {
         
         return usuarioRepository.save(usuario);

@@ -23,13 +23,13 @@ public class MensagemController {
     }
 
     @PostMapping("/texto")
-    public MensagemTexto criarMensagemTexto(@RequestBody MensagemTexto mensagem){
-        return mensagemService.criarMensagemTexto(mensagem);
+    public MensagemTexto criarMensagemTexto(@RequestBody Map<String, String> json){
+        return mensagemService.criarMensagemTexto(json);
     }
 
     @PostMapping("/arquivo")
-    public MensagemArquivo criarMensagemArquivo(@RequestBody MensagemArquivo mensagem){
-        return mensagemService.criarMensagemArquivo(mensagem);
+    public MensagemArquivo criarMensagemArquivo(@RequestBody Map<String, String> json){
+        return mensagemService.criarMensagemArquivo(json);
     }
 
     @GetMapping("/{id}")
