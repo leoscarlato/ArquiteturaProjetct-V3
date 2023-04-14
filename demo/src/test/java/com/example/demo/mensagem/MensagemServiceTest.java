@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.HashMap;
 
 @ExtendWith(MockitoExtension.class)
 public class MensagemServiceTest {
@@ -90,16 +91,47 @@ public class MensagemServiceTest {
     }
 
     @Test
-    void test_cria_mensagem_texto(){
-        Map<String, String> mensagem = Map.of("texto", "teste");
+    public void testCriarMensagemTexto() {
+
+        Map<String, String> json = new HashMap<>();
+        json.put("texto", "Olá, mundo!");
+        json.put("username", "joao");
 
         Usuario usuario = new Usuario();
-        usuario.setUsername("teste");
-        usuario.setId(1);
+        usuario.setUsername("joao");
 
-        Mockito.when(usuarioService.getUsuarioById(1)).thenReturn(usuario);
-        
-        
+        Mockito.when(usuarioService.getUsuarioByUsername("joao")).thenReturn(usuario);
+
+        Mockito.when(mensagemRepository.save(Mockito.any(MensagemTexto.class))).thenAnswer(invocationOnMock -> invocationOnMock.getArgument(0));
+
+        MensagemTexto mensagemTexto = mensagemService.criarMensagemTexto(json);
+
+        assert mensagemTexto.getTexto().equals("Olá, mundo!");
+        assert mensagemTexto.getUsername().equals(usuario);
+
+        Mockito.verify(mensagemRepository).save(mensagemTexto);
+    }
+
+    @Test
+    public void testCriarMensagemArquivo() {
+
+        Map<String, String> json = new HashMap<>();
+        json.put("arquivo", "arquivo.txt");
+        json.put("username", "joao");
+
+        Usuario usuario = new Usuario();
+        usuario.setUsername("joao");
+
+        Mockito.when(usuarioService.getUsuarioByUsername("joao")).thenReturn(usuario);
+
+        Mockito.when(mensagemRepository.save(Mockito.any(MensagemArquivo.class))).thenAnswer(invocationOnMock -> invocationOnMock.getArgument(0));
+
+        MensagemArquivo mensagemArquivo = mensagemService.criarMensagemArquivo(json);
+
+        assert mensagemArquivo.getArquivo().equals("arquivo.txt");
+        assert mensagemArquivo.getUsername().equals(usuario);
+
+        Mockito.verify(mensagemRepository).save(mensagemArquivo);
     }
     
 
